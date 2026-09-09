@@ -1,6 +1,20 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+// ============================================================================
+// 🔄 CALLBACK PROPS CONCEPT - CHILD-TO-PARENT COMMUNICATION ("LIFTING STATE UP")
+// ============================================================================
+// 1. WHAT IS A CALLBACK PROP?
+//    - While normal props pass data DOWN from Parent to Child,
+//      a Callback Prop is a FUNCTION passed from Parent to Child.
+//    - When the child invokes this function with arguments (`onLogin(data)`),
+//      data travels UP from Child to Parent!
+//
+// 2. IN THIS FILE:
+//    - `onLogin`: Callback function prop received from `App.jsx`.
+//    - On form submission, `onLogin({ name, role })` sends the credentials
+//      to `App.jsx` to update the global `user` auth state.
+// ============================================================================
 
 const LoginPage = ({ onLogin }) => {
     // State to toggle between Login and Sign Up
@@ -12,15 +26,17 @@ const LoginPage = ({ onLogin }) => {
     const handleSubmit = (e) => {
         e.preventDefault();
 
+        // Send data UP to App.jsx via the callback prop
         onLogin({
             name: email || 'User',
             role: Role
-        })
+        });
 
+        // Navigate to the respective dashboard based on selected role
         if (Role === 'admin') {
             navigate('/admin');
         } else {
-            navigate('/user')
+            navigate('/user');
         }
     };
 

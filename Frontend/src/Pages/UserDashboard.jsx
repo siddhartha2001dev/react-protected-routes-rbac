@@ -1,6 +1,26 @@
 import React from 'react'
 import ProductCard from '../Components/ProductCard';
 
+// ============================================================================
+// 📦 PROPS CONCEPT - PARENT COMPONENT (DATA SOURCE & PROP PASSING)
+// ============================================================================
+// 1. DATA SOURCE (MOCK DATABASE):
+//    - In real full-stack apps, this array comes from a backend API (Express/MongoDB).
+//    - Here, `dummyProducts` acts as our in-memory data source.
+//
+// 2. THE .map() METHOD:
+//    - `.map((Product) => ...)` iterates over each object in the array.
+//    - In each iteration, the `Product` argument holds the current item's data.
+//
+// 3. PASSING PROPS TO CHILD (<ProductCard />):
+//    - We pass data like HTML attributes: `title={Product.title}`, `price={Product.price}`.
+//    - The child component receives these as its `props` object.
+//
+// 4. THE 'key' PROP (IMPORTANT FOR INTERVIEWS):
+//    - `key={Product.id}` is required by React to uniquely identify each element.
+//    - It optimizes React's Virtual DOM reconciliation (rendering and updating lists).
+// ============================================================================
+
 const dummyProducts = [
     {
         id: 1,
@@ -36,17 +56,23 @@ const UserDashboard = () => {
                     Browse our top gadgets curated for you.
                 </p>
 
-                {/* 3 Columns Grid */}
+                {/* Responsive 3-Column Grid Container */}
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    
+                    {/* 
+                      DYNAMIC LIST RENDERING VIA .map()
+                      Iterating through each product and passing properties as Props to ProductCard
+                    */}
                     {dummyProducts.map((Product) => (
                         <ProductCard
-                            key={Product.id}
-                            title={Product.title}
-                            price={Product.price}
-                            image={Product.image}
-                            description={Product.description}
+                            key={Product.id}                  // Unique key for React's Virtual DOM
+                            title={Product.title}            // Passing 'title' prop
+                            price={Product.price}            // Passing 'price' prop
+                            image={Product.image}            // Passing 'image' prop
+                            description={Product.description}// Passing 'description' prop
                         />
                     ))}
+
                 </div>
             </div>
         </div>
